@@ -16,6 +16,12 @@ import * as typeHierarchy from './type-hierarchy';
 export const clangdDocumentSelector = [
   {scheme: 'file', language: 'c'},
   {scheme: 'file', language: 'cpp'},
+  {scheme: 'file', language: 'arm'},
+  {scheme: 'file', language: 'asm-intel-x86-generic'},
+  {scheme: 'file', language: 'power'},
+  {scheme: 'file', language: 'powerpc'},
+  {scheme: 'file', language: 'asm'},
+  {scheme: 'file', language: 'assembly'},
   {scheme: 'file', language: 'cuda-cpp'},
   {scheme: 'file', language: 'objective-c'},
   {scheme: 'file', language: 'objective-cpp'},

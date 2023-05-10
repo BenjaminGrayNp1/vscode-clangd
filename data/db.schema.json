@@ -1,0 +1,252 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Assembly instruction database for Clangd",
+	"description": "Describes Assembly instructions such that Clangd can provide inline documentation",
+	"type": "array",
+	"items": {
+		"description": "Details for a given instruction section in the ISA manual",
+		"type": "object",
+		"properties": {
+			"encodings": {
+				"type": "array",
+				"items": {
+					"$ref": "#/$defs/encoding"
+				}
+			},
+			"extendedMnemonics": {
+				"type": "array",
+				"items": {
+					"$ref": "#/$defs/extendedMnemonic"
+				}
+			},
+			"description": {
+				"$ref": "#/$defs/document"
+			}
+		},
+		"required": [
+			"encodings",
+			"extendedMnemonics",
+			"description"
+		],
+		"additionalProperties": false
+	},
+	"$defs": {
+		"document": {
+			"description": "Generic sequence of block level elements",
+			"type": "array",
+			"items": {
+				"oneOf": [
+					{
+						"$ref": "#/$defs/ruler"
+					},
+					{
+						"$ref": "#/$defs/paragraph"
+					},
+					{
+						"$ref": "#/$defs/codeBlock"
+					},
+					{
+						"$ref": "#/$defs/heading"
+					},
+					{
+						"$ref": "#/$defs/bulletList"
+					}
+				]
+			}
+		},
+		"ruler": {
+			"description": "Horizontal dividing rule between sections",
+			"type": "object",
+			"properties": {
+				"type": {
+					"const": "Ruler"
+				}
+			},
+			"required": [
+				"type"
+			],
+			"additionalProperties": false
+		},
+		"paragraph": {
+			"description": "Text and other inline content",
+			"type": "object",
+			"properties": {
+				"type": {
+					"const": "Paragraph"
+				},
+				"content": {
+					"type": "array",
+					"items": {
+						"oneOf": [
+							{
+								"type": "string"
+							},
+							{
+								"$ref": "#/$defs/code"
+							}
+						]
+					}
+				}
+			},
+			"required": [
+				"type",
+				"content"
+			],
+			"additionalProperties": false
+		},
+		"code": {
+			"description": "Inline code within a paragraph",
+			"type": "object",
+			"properties": {
+				"type": {
+					"const": "Code"
+				},
+				"content": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"type",
+				"content"
+			],
+			"additionalProperties": false
+		},
+		"codeBlock": {
+			"description": "Monspaced code block, coloured according to set language",
+			"type": "object",
+			"properties": {
+				"type": {
+					"const": "CodeBlock"
+				},
+				"language": {
+					"type": "string"
+				},
+				"content": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"type",
+				"language",
+				"content"
+			],
+			"additionalProperties": false
+		},
+		"heading": {
+			"description": "Section heading",
+			"type": "object",
+			"properties": {
+				"type": {
+					"const": "Heading"
+				},
+				"level": {
+					"type": "number"
+				},
+				"content": {
+					"$ref": "#/$defs/paragraph"
+				}
+			},
+			"required": [
+				"type",
+				"level",
+				"content"
+			],
+			"additionalProperties": false
+		},
+		"bulletList": {
+			"description": "Unordered list of items",
+			"type": "object",
+			"properties": {
+				"type": {
+					"const": "BulletList"
+				},
+				"content": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/document"
+					}
+				}
+			},
+			"required": [
+				"type",
+				"content"
+			],
+			"additionalProperties": false
+		},
+		"encoding": {
+			"description": "Structure of a single instruction encoding",
+			"type": "object",
+			"properties": {
+				"heading": {
+					"type": "string"
+				},
+				"syntax": {
+					"$ref": "#/$defs/syntax"
+				},
+				"page": {
+					"description": "Page this encoding can be found on in the ISA manual",
+					"type": "string"
+				}
+			},
+			"required": [
+				"heading",
+				"syntax"
+			],
+			"additionalProperties": false
+		},
+		"syntax": {
+			"description": "List of syntax variations for this encoding",
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"numargs": {
+						"type": "number"
+					},
+					"args": {
+						"type": "string"
+					},
+					"comment": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"numargs"
+				],
+				"additionalProperties": false
+			}
+		},
+		"extendedMnemonic": {
+			"description": "Alias for another mnemonic",
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"args": {
+					"type": "string"
+				},
+				"numargs": {
+					"type": "integer"
+				},
+				"baseName": {
+					"type": "string"
+				},
+				"baseArgs": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"name",
+				"numargs",
+				"baseName",
+				"baseArgs"
+			],
+			"additionalProperties": false
+		}
+	}
+}

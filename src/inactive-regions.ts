@@ -59,8 +59,8 @@ export class InactiveRegionsFeature implements vscodelc.StaticFeature {
           vscode.workspace.onDidChangeConfiguration((conf) => {
             const inactiveSettingsChanged =
                 conf.affectsConfiguration(
-                    'clangd.inactiveRegions.useBackgroundHighlight') ||
-                conf.affectsConfiguration('clangd.inactiveRegions.opacity');
+                    'clangd.asm.inactiveRegions.useBackgroundHighlight') ||
+                conf.affectsConfiguration('clangd.asm.inactiveRegions.opacity');
             if (!(conf.affectsConfiguration('workbench.colorTheme') ||
                   inactiveSettingsChanged))
               return;
@@ -93,7 +93,7 @@ export class InactiveRegionsFeature implements vscodelc.StaticFeature {
       this.decorationType = vscode.window.createTextEditorDecorationType({
         isWholeLine: true,
         backgroundColor:
-            new vscode.ThemeColor('clangd.inactiveRegions.background'),
+            new vscode.ThemeColor('clangd.asm.inactiveRegions.background'),
       });
     } else {
       this.decorationType = vscode.window.createTextEditorDecorationType({
