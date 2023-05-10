@@ -7,6 +7,8 @@ import {ClangdContext} from './clangd-context';
  *  activated the very first time a command is executed.
  */
 export async function activate(context: vscode.ExtensionContext) {
+  process.env.CLANGD_DOCS_PPC = context.asAbsolutePath("data/ppc_instructions_mock.json");
+
   const outputChannel = vscode.window.createOutputChannel('clangd');
   context.subscriptions.push(outputChannel);
 
@@ -16,9 +18,9 @@ export async function activate(context: vscode.ExtensionContext) {
   // An empty place holder for the activate command, otherwise we'll get an
   // "command is not registered" error.
   context.subscriptions.push(
-      vscode.commands.registerCommand('clangd.activate', async () => {}));
+      vscode.commands.registerCommand('clangd.asm.activate', async () => {}));
   context.subscriptions.push(
-      vscode.commands.registerCommand('clangd.restart', async () => {
+      vscode.commands.registerCommand('clangd.asm.restart', async () => {
         await clangdContext.dispose();
         await clangdContext.activate(context.globalStoragePath, outputChannel);
       }));

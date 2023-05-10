@@ -1,3 +1,18 @@
+This is a modified version of the [upstream VS Code package](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd) to demonstrate Assembly support on the client side. All the package settings are moved from `clangd` to the `clangd.asm` namespace to avoid conflict with the upstream.
+
+* See more here https://github.com/clangd/clangd/discussions/1805
+* Get the corresponding clangd here https://github.com/BenjaminGrayNp1/llvm-project
+
+![Code completion](doc-assets/editor_hover_msg.png)
+
+## Installation
+
+Download the latest release VSIX and use the VS Code extensions tab to import the VSIX.
+
+Download or build the modified Clangd. In VS Code, set the `clangd.asm.path` setting to the path of the modified clangd binary.
+
+-------
+
 # clangd
 
 [clangd](https://clangd.llvm.org) helps developers write, understand and

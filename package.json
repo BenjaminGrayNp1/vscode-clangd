@@ -1,12 +1,10 @@
 {
-    "name": "vscode-clangd",
-    "displayName": "clangd",
+    "name": "vscode-clangd-asm",
+    "displayName": "clangd-asm",
     "description": "C/C++ completion, navigation, and insights",
-    "version": "0.1.25",
-    "publisher": "llvm-vs-code-extensions",
+    "version": "0.1.25-asm0",
+    "publisher": "Benjamin Gray",
     "license": "MIT",
-    "homepage": "https://clangd.llvm.org/",
-    "icon": "icon.png",
     "engines": {
         "vscode": "^1.65.0"
     },
@@ -20,17 +18,24 @@
         "C++",
         "clang",
         "clangd",
+        "asm",
+        "assembly",
+        "power",
+        "powerpc",
         "LLVM"
     ],
     "activationEvents": [
         "onLanguage:c",
         "onLanguage:cpp",
+        "onLanguage:arm",
+        "onLanguage:asm-intel-x86-generic",
+        "onLanguage:power",
+        "onLanguage:powerpc",
+        "onLanguage:asm",
+        "onLanguage:assembly",
         "onLanguage:cuda-cpp",
         "onLanguage:objective-c",
-        "onLanguage:objective-cpp",
-        "onCommand:clangd.activate",
-        "onCommand:clangd.install",
-        "onCommand:clangd.update"
+        "onLanguage:objective-cpp"
     ],
     "main": "./out/bundle",
     "scripts": {
@@ -69,14 +74,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/clangd/vscode-clangd.git"
+        "url": "https://github.com/BenjaminGrayNp1/vscode-clangd.git"
     },
     "qna": "marketplace",
     "capabilities": {
         "untrustedWorkspaces": {
             "supported": "limited",
             "description": "In restricted mode clangd.path and clangd.arguments are not respected.",
-            "restrictedConfigurations": ["clangd.path", "clangd.arguments"]
+            "restrictedConfigurations": ["clangd.asm.path", "clangd.asm.arguments"]
         }
     },
     "contributes": {
@@ -94,13 +99,13 @@
             "type": "object",
             "title": "clangd",
             "properties": {
-                "clangd.path": {
+                "clangd.asm.path": {
                     "type": "string",
                     "default": "clangd",
                     "scope": "machine-overridable",
                     "description": "The path to clangd executable, e.g.: /usr/bin/clangd."
                 },
-                "clangd.arguments": {
+                "clangd.asm.arguments": {
                     "type": "array",
                     "default": [],
                     "items": {
@@ -108,17 +113,17 @@
                     },
                     "description": "Arguments for clangd server."
                 },
-                "clangd.trace": {
+                "clangd.asm.trace": {
                     "type": "string",
                     "description": "Names a file that clangd should log a performance trace to, in chrome trace-viewer JSON format."
                 },
-                "clangd.semanticHighlighting": {
+                "clangd.asm.semanticHighlighting": {
                     "type": "boolean",
                     "default": true,
                     "description": "Enable semantic highlighting in clangd.",
                     "deprecationMessage": "Legacy semanticHighlights is no longer supported. Please use `editor.semanticHighlighting.enabled` instead."
                 },
-                "clangd.fallbackFlags": {
+                "clangd.asm.fallbackFlags": {
                     "type": "array",
                     "default": [],
                     "items": {
@@ -126,22 +131,22 @@
                     },
                     "description": "Extra clang flags used to parse files when no compilation database is found."
                 },
-                "clangd.serverCompletionRanking": {
+                "clangd.asm.serverCompletionRanking": {
                     "type": "boolean",
                     "default": true,
                     "description": "Always rank completion items on the server as you type. This produces more accurate results at the cost of higher latency than client-side filtering."
                 },
-                "clangd.restartAfterCrash": {
+                "clangd.asm.restartAfterCrash": {
                     "type": "boolean",
                     "default": true,
                     "description": "Auto restart clangd (up to 4 times) if it crashes."
                 },
-                "clangd.checkUpdates": {
+                "clangd.asm.checkUpdates": {
                     "type": "boolean",
                     "default": false,
                     "description": "Check for language server updates on startup."
                 },
-                "clangd.onConfigChanged": {
+                "clangd.asm.onConfigChanged": {
                     "type": "string",
                     "default": "prompt",
                     "description": "What to do when clangd configuration files are changed. Ignored for clangd 12+, which can reload such files itself.",
@@ -156,17 +161,17 @@
                         "Do nothing"
                     ]
                 },
-                "clangd.detectExtensionConflicts": {
+                "clangd.asm.detectExtensionConflicts": {
                     "type": "boolean",
                     "default": true,
                     "description": "Warn about conflicting extensions and suggest disabling them."
                 },
-                "clangd.inactiveRegions.useBackgroundHighlight": {
+                "clangd.asm.inactiveRegions.useBackgroundHighlight": {
                     "type": "boolean",
                     "default": false,
                     "description": "Use a background highlight rather than opacity to identify inactive preprocessor regions."
                 },
-                "clangd.inactiveRegions.opacity": {
+                "clangd.asm.inactiveRegions.opacity": {
                     "type": "number",
                     "default": 0.55,
                     "description": "Opacity of inactive regions (used only if clangd.inactiveRegions.useBackgroundHighlight=false)"
@@ -175,7 +180,7 @@
         },
         "colors": [
             {
-                "id": "clangd.inactiveRegions.background",
+                "id": "clangd.asm.inactiveRegions.background",
                 "description": "Background color of inactive code regions (used only if clangd.inactiveRegions.useBackgroundHighlight=true)",
                 "defaults": {
                     "dark": "#1212124C",
@@ -186,110 +191,110 @@
         ],
         "commands": [
             {
-                "command": "clangd.switchheadersource",
+                "command": "clangd.asm.switchheadersource",
                 "category": "clangd",
                 "title": "Switch Between Source/Header"
             },
             {
-                "command": "clangd.install",
+                "command": "clangd.asm.install",
                 "category": "clangd",
                 "title": "Download language server"
             },
             {
-                "command": "clangd.update",
+                "command": "clangd.asm.update",
                 "category": "clangd",
                 "title": "Check for language server update"
             },
             {
-                "command": "clangd.activate",
+                "command": "clangd.asm.activate",
                 "category": "clangd",
                 "title": "Manually activate extension"
             },
             {
-                "command": "clangd.restart",
+                "command": "clangd.asm.restart",
                 "category": "clangd",
                 "title": "Restart language server"
             },
             {
-                "command": "clangd.typeHierarchy",
+                "command": "clangd.asm.typeHierarchy",
                 "category": "clangd",
                 "title": "Open Type Hierarchy"
             },
             {
-                "command": "clangd.typeHierarchy.viewParents",
+                "command": "clangd.asm.typeHierarchy.viewParents",
                 "category": "clangd",
                 "title": "Types: Show Base Classes",
                 "icon": "$(triangle-up)"
             },
             {
-                "command": "clangd.typeHierarchy.viewChildren",
+                "command": "clangd.asm.typeHierarchy.viewChildren",
                 "category": "clangd",
                 "title": "Types: Show Derived Classes",
                 "icon": "$(triangle-down)"
             },
             {
-                "command": "clangd.typeHierarchy.close",
+                "command": "clangd.asm.typeHierarchy.close",
                 "category": "clangd",
-                "enablement": "clangd.typeHierarchyView.visible",
+                "enablement": "clangd.asm.typeHierarchyView.visible",
                 "title": "Close type hierarchy view",
                 "icon": "$(panel-close)"
             },
             {
-                "command": "clangd.memoryUsage",
+                "command": "clangd.asm.memoryUsage",
                 "category": "clangd",
                 "title": "Show memory usage",
-                "enablement": "clangd.memoryUsage.supported",
+                "enablement": "clangd.asm.memoryUsage.supported",
                 "icon": "$(refresh)"
             },
             {
-                "command": "clangd.memoryUsage.close",
+                "command": "clangd.asm.memoryUsage.close",
                 "category": "clangd",
-                "enablement": "clangd.memoryUsage.visible",
+                "enablement": "clangd.asm.memoryUsage.visible",
                 "title": "Close memory usage view",
                 "icon": "$(panel-close)"
             },
             {
-                "command": "clangd.ast",
+                "command": "clangd.asm.ast",
                 "category": "clangd",
                 "title": "Show AST",
-                "enablement": "clangd.ast.supported",
+                "enablement": "clangd.asm.ast.supported",
                 "icon": "$(list-tree)"
             },
             {
-                "command": "clangd.ast.close",
+                "command": "clangd.asm.ast.close",
                 "category": "clangd",
-                "enablement": "clangd.ast.visible",
+                "enablement": "clangd.asm.ast.visible",
                 "title": "Close AST view",
                 "icon": "$(panel-close)"
             },
             {
-                "command": "clangd.projectConfig",
+                "command": "clangd.asm.projectConfig",
                 "category": "clangd",
                 "title": "Open project configuration file",
                 "icon": "$(gear)"
             },
             {
-                "command": "clangd.userConfig",
+                "command": "clangd.asm.userConfig",
                 "category": "clangd",
                 "title": "Open user configuration file",
                 "icon": "$(gear)"
             },
             {
-                "command": "clangd.inlayHints.toggle",
+                "command": "clangd.asm.inlayHints.toggle",
                 "category": "clangd",
                 "title": "Toggle inlay hints",
-                "enablement": "clangd.inlayHints.supported"
+                "enablement": "clangd.asm.inlayHints.supported"
             }
         ],
         "keybindings": [
             {
-                "command": "clangd.switchheadersource",
+                "command": "clangd.asm.switchheadersource",
                 "key": "Alt+o",
                 "mac": "Alt+cmd+o",
                 "when": "editorTextFocus"
             },
             {
-                "command": "clangd.typeHierarchy",
+                "command": "clangd.asm.typeHierarchy",
                 "key": "Shift+Alt+t",
                 "when": "editorTextFocus"
             }
@@ -297,84 +302,84 @@
         "menus": {
             "editor/context": [
                 {
-                    "command": "clangd.typeHierarchy",
+                    "command": "clangd.asm.typeHierarchy",
                     "when": "resourceLangId == cpp && clangd.enableTypeHierarchy",
                     "group": "0_navigation@4",
                     "_comment": "see https://github.com/microsoft/vscode-references-view/blob/f63eaed9934ca5ecc8f3fb3ca096f38c6e5e181f/package.json#L162"
                 },
                 {
-                    "command": "clangd.switchheadersource",
+                    "command": "clangd.asm.switchheadersource",
                     "when": "resourceLangId == c || resourceLangId == cpp || resourceLangId == cuda-cpp || resourceLangId == objective-c || resourceLangId == objective-cpp",
                     "group": "0_navigation@5"
                 },
                 {
-                    "command": "clangd.ast",
+                    "command": "clangd.asm.ast",
                     "when": "(resourceLangId == c || resourceLangId == cpp || resourceLangId == cuda-cpp || resourceLangId == objective-c || resourceLangId == objective-cpp) && clangd.ast.supported"
                 }
             ],
             "view/title": [
                 {
-                    "command": "clangd.typeHierarchy.viewParents",
+                    "command": "clangd.asm.typeHierarchy.viewParents",
                     "when": "view == clangd.typeHierarchyView",
                     "group": "navigation"
                 },
                 {
-                    "command": "clangd.typeHierarchy.viewChildren",
+                    "command": "clangd.asm.typeHierarchy.viewChildren",
                     "when": "view == clangd.typeHierarchyView",
                     "group": "navigation"
                 },
                 {
-                    "command": "clangd.typeHierarchy.close",
+                    "command": "clangd.asm.typeHierarchy.close",
                     "when": "view == clangd.typeHierarchyView",
                     "group": "navigation"
                 },
                 {
-                    "command": "clangd.memoryUsage.close",
+                    "command": "clangd.asm.memoryUsage.close",
                     "when": "view == clangd.memoryUsage",
                     "group": "navigation"
                 },
                 {
-                    "command": "clangd.memoryUsage",
+                    "command": "clangd.asm.memoryUsage",
                     "when": "view == clangd.memoryUsage",
                     "group": "navigation"
                 },
                 {
-                    "command": "clangd.ast.close",
+                    "command": "clangd.asm.ast.close",
                     "when": "view == clangd.ast",
                     "group": "navigation"
                 }
             ],
             "commandPalette": [
                 {
-                    "command": "clangd.typeHierarchy.viewParents",
+                    "command": "clangd.asm.typeHierarchy.viewParents",
                     "when": "resourceLangId == cpp"
                 },
                 {
-                    "command": "clangd.typeHierarchy.viewChildren",
+                    "command": "clangd.asm.typeHierarchy.viewChildren",
                     "when": "resourceLangId == cpp"
                 },
                 {
-                    "command": "clangd.memoryUsage",
-                    "when": "clangd.memoryUsage.supported"
+                    "command": "clangd.asm.memoryUsage",
+                    "when": "clangd.asm.memoryUsage.supported"
                 }
             ]
         },
         "views": {
             "explorer": [
                 {
-                    "id": "clangd.typeHierarchyView",
+                    "id": "clangd.asm.typeHierarchyView",
                     "name": "Type Hierarchy",
-                    "when": "clangd.typeHierarchyVisible"
+                    "when": "clangd.asm.typeHierarchyVisible"
                 },
                 {
-                    "id": "clangd.memoryUsage",
+                    "id": "clangd.asm.memoryUsage",
                     "name": "clangd Memory Usage",
-                    "when": "clangd.memoryUsage.hasData"
+                    "when": "clangd.asm.memoryUsage.hasData"
                 },
                 {
-                    "id": "clangd.ast",
+                    "id": "clangd.asm.ast",
                     "name": "AST",
-                    "when": "clangd.ast.hasData"
+                    "when": "clangd.asm.ast.hasData"
                 }
             ]
         }

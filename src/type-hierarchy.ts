@@ -92,7 +92,7 @@ class TypeHierarchyTreeItem extends vscode.TreeItem {
     // definition of the class.
     this.command = {
       arguments: [item],
-      command: 'clangd.typeHierarchy.gotoItem',
+      command: 'clangd.asm.typeHierarchy.gotoItem',
       title: 'Go to'
     };
   }
@@ -140,10 +140,10 @@ class TypeHierarchyFeature implements vscodelc.StaticFeature {
 
   private recomputeEnableTypeHierarchy() {
     if (this.state === vscodelc.State.Running) {
-      vscode.commands.executeCommand('setContext', 'clangd.enableTypeHierarchy',
+      vscode.commands.executeCommand('setContext', 'clangd.asm.enableTypeHierarchy',
                                      this.serverSupportsTypeHierarchy);
     } else if (this.state === vscodelc.State.Stopped) {
-      vscode.commands.executeCommand('setContext', 'clangd.enableTypeHierarchy',
+      vscode.commands.executeCommand('setContext', 'clangd.asm.enableTypeHierarchy',
                                      false);
     }
   }
@@ -170,19 +170,19 @@ class TypeHierarchyProvider implements
     this.client = context.client;
 
     context.subscriptions.push(vscode.commands.registerTextEditorCommand(
-        'clangd.typeHierarchy', this.reveal, this));
+        'clangd.asm.typeHierarchy', this.reveal, this));
     context.subscriptions.push(vscode.commands.registerCommand(
-        'clangd.typeHierarchy.close', this.close, this));
+        'clangd.asm.typeHierarchy.close', this.close, this));
     context.subscriptions.push(vscode.commands.registerCommand(
-        'clangd.typeHierarchy.gotoItem', this.gotoItem, this));
+        'clangd.asm.typeHierarchy.gotoItem', this.gotoItem, this));
     context.subscriptions.push(vscode.commands.registerCommand(
-        'clangd.typeHierarchy.viewParents',
+        'clangd.asm.typeHierarchy.viewParents',
         () => this.setDirection(TypeHierarchyDirection.Parents)));
     context.subscriptions.push(vscode.commands.registerCommand(
-        'clangd.typeHierarchy.viewChildren',
+        'clangd.asm.typeHierarchy.viewChildren',
         () => this.setDirection(TypeHierarchyDirection.Children)));
 
-    this.treeView = vscode.window.createTreeView('clangd.typeHierarchyView',
+    this.treeView = vscode.window.createTreeView('clangd.asm.typeHierarchyView',
                                                  {treeDataProvider: this});
     context.subscriptions.push(this.treeView);
     // Show children by default.
@@ -294,7 +294,7 @@ class TypeHierarchyProvider implements
     // This makes the type hierarchy view visible by causing the condition
     // "when": "extension.vscode-clangd.typeHierarchyVisible" from
     // package.json to evaluate to true.
-    vscode.commands.executeCommand('setContext', 'clangd.typeHierarchyVisible',
+    vscode.commands.executeCommand('setContext', 'clangd.asm.typeHierarchyVisible',
                                    true);
 
     const item = await this.client.sendRequest(TypeHierarchyRequest.type, {
@@ -341,7 +341,7 @@ class TypeHierarchyProvider implements
 
   private close() {
     // Hide the type hierarchy view.
-    vscode.commands.executeCommand('setContext', 'clangd.typeHierarchyVisible',
+    vscode.commands.executeCommand('setContext', 'clangd.asm.typeHierarchyVisible',
                                    false);
 
     this.root = undefined;

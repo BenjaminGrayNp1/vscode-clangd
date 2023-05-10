@@ -54,7 +54,7 @@ export class InactiveRegionsFeature implements vscodelc.StaticFeature {
         this.decorationType = vscode.window.createTextEditorDecorationType({
           isWholeLine: true,
           backgroundColor:
-              new vscode.ThemeColor('clangd.inactiveRegions.background'),
+              new vscode.ThemeColor('clangd.asm.inactiveRegions.background'),
         });
       } else {
         this.decorationType = vscode.window.createTextEditorDecorationType({
