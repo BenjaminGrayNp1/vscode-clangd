@@ -2,7 +2,7 @@
     "name": "vscode-clangd-asm",
     "displayName": "clangd-asm",
     "description": "C/C++ completion, navigation, and insights",
-    "version": "0.1.25-asm0",
+    "version": "0.1.25-asm1",
     "publisher": "Benjamin Gray",
     "license": "MIT",
     "engines": {
