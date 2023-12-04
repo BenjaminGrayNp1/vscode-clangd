@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as config from './config';
 
 import {ClangdContext} from './clangd-context';
 
@@ -7,7 +8,11 @@ import {ClangdContext} from './clangd-context';
  *  activated the very first time a command is executed.
  */
 export async function activate(context: vscode.ExtensionContext) {
-  process.env.CLANGD_DOCS_PPC = context.asAbsolutePath("data/ppc_instructions_mock.json");
+  if (!process.env.CLANGD_DOCS_PPC)
+    process.env.CLANGD_DOCS_PPC = config.get("ppc-docs");
+
+  if (!process.env.CLANGD_DOCS_PPC)
+    process.env.CLANGD_DOCS_PPC = context.asAbsolutePath("data/ppc_instructions_mock.json");
 
   const outputChannel = vscode.window.createOutputChannel('clangd');
   context.subscriptions.push(outputChannel);
